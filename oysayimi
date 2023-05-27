@@ -1,0 +1,87 @@
+#include <iostream>
+#include <map>
+#include <string>
+#include<fstream>
+
+using namespace std;
+void DosyaOylariKaydet(const map<string, int>& oySayisi, int bosOy, int gecersizOy) {
+	ofstream file("oylar.txt");
+	
+	if (file.is_open()) {
+		for (const auto& pair : oySayisi) {
+			file << pair.first << ":" << pair.second << endl;
+		}
+
+		file << "Gecersiz Oylar:" << gecersizOy << endl;
+		file << "Bos Oylar:" << bosOy << endl;
+
+		file.close();
+		cout << "Oylar dosyaya kaydedildi." <<endl;
+	}
+	else {
+		cout << "Dosya acilamadi." << endl;
+	}
+}
+
+int main() {
+	map<string, int>oySayisi;
+	string kisi1, kisi2;
+	
+;
+
+	cout << "1.kisinin adini giriniz  :";
+	getline(cin, kisi1);
+
+	cout << "2.kisinin adini giriniz : ";
+	getline(cin , kisi2);
+
+
+	string oy;
+
+	int toplamOy= 0;
+	int bosOy =0 ;
+	int gecersizOy = 0;
+	
+	
+	cout << "Oyunuzu " << kisi1 << " ya da " << kisi2 << " icin giriniz" << " 1= " << kisi1 << " 2= "<<kisi2 <<endl<<" eger gecersiz oy girilicekse 3'u tuslayin" << " eger bos oy girilicekse 4'u tuslayin" << endl;
+
+	while (cin >> oy) {
+		if (oy == "1") {
+			oySayisi[kisi1]++;
+			toplamOy++;
+		}
+		else if (oy == "2") {
+			oySayisi[kisi2]++;
+			toplamOy++;
+		}
+		else if (oy == "3") {
+
+			gecersizOy++;
+			toplamOy++;
+		}
+		else if (oy == "4") {
+			bosOy++;
+			toplamOy++;
+		}
+		else if (oy == "q" || oy == "Q") {
+			break; // Oy alma döngüsünden çık
+		}
+
+		cout << "Oyunuzu devam ettirmek icin yeni bir oy girin (1, 2, 3, 4), programi sonlandirmak icin (q veya Q): ";
+		cin.ignore();
+	}
+
+
+	DosyaOylariKaydet(oySayisi,gecersizOy,bosOy);
+
+	
+	cout << "Oy Sayimi Sonuclari:" << endl;
+	cout << kisi1 << ": " << oySayisi[kisi1] << " oy" << endl;
+	cout << kisi2 << ": " << oySayisi[kisi2] << " oy" << endl;
+	cout << "Toplam oy sayisi: " << toplamOy<< endl;
+	cout << "Gecersiz oylar: " << gecersizOy << endl;
+	cout << "Bos oylar: " << bosOy << endl;
+
+	return 0;
+}
+
